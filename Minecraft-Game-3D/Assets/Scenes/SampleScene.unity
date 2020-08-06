@@ -278,18 +278,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c878ebb637698d4381653d8941bfe63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  seed: 57547547
+  biome: {fileID: 0}
   player: {fileID: 963194228}
   spwaPosition: {x: 0, y: 0, z: 0}
   material: {fileID: 2100000, guid: 1e472718f1dc87143a3494140104e079, type: 2}
   blocktypes:
+  - blockName: Air
+    isSolid: 1
+    backFaceTexture: 3
+    frontFaceTexture: 3
+    topFaceTexture: 3
+    bottomFaceTexture: 3
+    leftfaceTexture: 3
+    rightFacetexture: 3
   - blockName: Bedrock
     isSolid: 1
-    backFaceTexture: 1
-    frontFaceTexture: 1
-    topFaceTexture: 1
-    bottomFaceTexture: 1
-    leftfaceTexture: 1
-    rightFacetexture: 1
+    backFaceTexture: 9
+    frontFaceTexture: 9
+    topFaceTexture: 9
+    bottomFaceTexture: 9
+    leftfaceTexture: 9
+    rightFacetexture: 9
   - blockName: Stone
     isSolid: 1
     backFaceTexture: 0
@@ -306,6 +316,22 @@ MonoBehaviour:
     bottomFaceTexture: 1
     leftfaceTexture: 2
     rightFacetexture: 2
+  - blockName: Sand
+    isSolid: 1
+    backFaceTexture: 10
+    frontFaceTexture: 10
+    topFaceTexture: 10
+    bottomFaceTexture: 10
+    leftfaceTexture: 10
+    rightFacetexture: 10
+  - blockName: Dirt
+    isSolid: 1
+    backFaceTexture: 1
+    frontFaceTexture: 1
+    topFaceTexture: 1
+    bottomFaceTexture: 1
+    leftfaceTexture: 1
+    rightFacetexture: 1
 --- !u!4 &1561713224
 Transform:
   m_ObjectHideFlags: 0
@@ -313,7 +339,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1561713222}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.137497, y: 7.2581873, z: -9.518362}
+  m_LocalPosition: {x: 11.736, y: 8.197, z: 11.362}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

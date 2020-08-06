@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class World : MonoBehaviour
 {
+
+	public int seed;
+	public BiomeAttributes biome;
+
 	public Transform player;
 	public Vector3 spwaPosition;
 
@@ -18,6 +22,7 @@ public class World : MonoBehaviour
 	 
 	private void Start()
 	{
+		Random.InitState (seed);
 		spwaPosition = new Vector3 ((VoxelData.WorldSizeInChunks * VoxelData.ChunkWidth) / 2f, VoxelData.ChunkHeight + 2f , (VoxelData.WorldSizeInChunks * VoxelData.ChunkWidth) / 2f);
 		GenerateWorld();
 		playerLastChunkCoord = GetChunkCoordFromVector3 (player.position);
@@ -90,14 +95,43 @@ public class World : MonoBehaviour
 
 	public byte GetVoxels(Vector3 pos)
 	{
-		if (IsVoxelInWorld(pos))
+		int yPos = Mathf.FloorToInt (pos.y);
+		/* IMMUTABLE PASS*/
+
+		// if outside world, return air.
+		if (IsVoxelInWorld (pos))
 			return 0;
-		if (pos.y < 1)
-			return 0;
-		else if (pos.y == VoxelData.ChunkHeight - 1)
+
+		//if bottom block of chunk, return  bedrock
+		if (yPos == 0)
 			return 1;
+
+		/* Basic TERRAIN PASS*/
+
+		int terraiHeight = Mathf.FloorToInt (biome.terrainheight * Noise.Get2DParlin (new Vector2 (pos.x, pos.z), 0, biome.terrainScale)) + biome.solidGroundHeight;
+
+		byte VoxelValue = 0;
+		if (yPos <= terraiHeight)
+			VoxelValue = 3;
+		else if (yPos < terraiHeight && yPos > terraiHeight - 4)
+			VoxelValue =  5;
+		else if (yPos > terraiHeight)
+			return 0;
 		else
-			return 2;  
+			VoxelValue =  2;
+
+		/* SECOND PASS*/
+		if (VoxelValue == 2)
+		{
+			foreach (Lode lode in biome.lodes) 
+			{
+				if (yPos > lode.minHeight && yPos < lode.maxHeight)
+				if (Noise.Get3DParlin (pos, lode.noiseOffset, lode.scale, lode.threshole))
+					VoxelValue = lode.blockID;
+			}
+		}
+
+		return VoxelValue;
 	}
 
 	void createNewchunk(int x, int z)
